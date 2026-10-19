@@ -8,8 +8,8 @@
         "type": "local",
         "command": ["node", "server/src/index.js"],
         "cwd": ".",
-        // Exposes chrome_* tools directly instead of grouping them in Code Mode.
-        "codemode": false,
+        // Code Mode: tools are called as tools.chrome.<tool>() inside execute.
+        "codemode": true,
         // Keep this port in sync with the extension popup.
         "environment": {
           "OPENCODE_BROWSER_PORT": "8787"

@@ -7,11 +7,29 @@ description: Controla o Chrome real pela extensão OpenCode Browser Bridge e pel
 
 Esta skill é o manual de uso da integração **OpenCode Browser Bridge**: um servidor MCP local (`chrome`) mais uma extensão MV3 que controla o Google Chrome de verdade, com entrada confiável via CDP quando disponível.
 
-O servidor MCP já é iniciado pelo OpenCode e injeta suas instruções na sessão. Esta skill complementa isso com o fluxo de trabalho, receitas e cuidados que não cabem na descrição curta das ferramentas. Se o servidor estiver conectado, o agente verá as ferramentas `chrome_*`; esta skill não substitui a conexão.
+O servidor MCP já é iniciado pelo OpenCode e injeta suas instruções na sessão. Esta skill complementa isso com o fluxo de trabalho, receitas e cuidados que não cabem na descrição curta das ferramentas. Neste projeto o servidor está em **Code Mode**: as ferramentas ficam em `tools.chrome.*` dentro de `execute` (veja abaixo). Esta skill não substitui a conexão.
+
+## Code Mode
+
+Este projeto configura o servidor `chrome` com `"codemode": true`. As ferramentas não aparecem diretamente na lista nativa; chame-as dentro da ferramenta `execute`:
+
+```js
+const status = await tools.chrome.status({});
+const snap = await tools.chrome.snapshot({ tabId: 123 });
+return { status, snap };
+```
+
+Regras:
+
+- Use `tools.chrome.<nome>({...})` com os mesmos argumentos da referência (`chrome_click` vira `tools.chrome.click`).
+- Agrupe chamadas independentes: `const [a, b] = await Promise.all([...])`.
+- Dê `return` explícito no fim do `execute`; o valor retornado é o que o modelo vê.
+- `await` toda chamada cujo resultado importa. Chamadas pendentes são interrompidas quando o `execute` termina.
+- Para voltar às ferramentas diretas `chrome_*`, troque para `"codemode": false` em `opencode.jsonc` e rode `opencode reload`.
 
 ## Antes de qualquer ação
 
-1. Chame `chrome_status`. Ele mostra o estado do bridge, a versão da extensão, as abas abertas e a aba ativa.
+1. Chame `tools.chrome.status({})` (ou `chrome_status`, no modo direto). Ele mostra o estado do bridge, a versão da extensão, as abas abertas e a aba ativa.
 2. Se aparecer `Bridge: disconnected`, não invente comandos. Peça para abrir o popup da extensão e clicar em **Conectar**, confira a porta (`ws://127.0.0.1:8787`) e recarregue a extensão em `chrome://extensions` se necessário.
 3. Se houver mais de uma janela ou aba, **passe `tabId` explicitamente** em todas as chamadas. A aba ativa pode ser a interface do próprio OpenCode ou uma aba pessoal do usuário; não a controle por engano.
 4. O servidor MCP precisa se chamar `chrome` no `opencode.jsonc`. **Não use `browser`**: o OpenCode V2 tem um namespace nativo `browser` que é negado por padrão e sombreia ferramentas MCP com os mesmos nomes (`navigate`, `snapshot`, `click`, `screenshot` etc.). Se acabou de renomear, rode `opencode reload` e abra uma **nova sessão**. Se ainda faltarem ferramentas, abra outra sessão; o catálogo MCP pode ficar congelado por sessão em versões afetadas.
@@ -41,7 +59,7 @@ Os padrões privilegiam velocidade. Ajuste apenas quando o site exigir:
 
 ## Fluxo padrão
 
-1. `chrome_status` — conexão, abas e aba ativa.
+1. `tools.chrome.status({})` — conexão, abas e aba ativa.
 2. `chrome_tabs` (`list`/`get`) — escolha a aba e guarde o `tabId`.
 3. `chrome_navigate` (`goto`) ou `chrome_tabs` (`new`) — abra a página.
 4. `chrome_snapshot` — árvore de acessibilidade com refs.

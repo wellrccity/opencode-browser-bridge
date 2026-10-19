@@ -14,7 +14,9 @@ import { registerTools } from './tools.js';
 
 const VERSION = '0.1.2';
 
-const INSTRUCTIONS = `Controls a real Google Chrome browser through the "OpenCode Browser Bridge" extension. Tools are exposed as chrome_*.
+const INSTRUCTIONS = `Controls a real Google Chrome browser through the "OpenCode Browser Bridge" extension.
+
+Tool access: in Code Mode call tools.chrome.<tool>({...}) inside execute, e.g. await tools.chrome.status({}) or await tools.chrome.snapshot({ tabId }). With codemode:false the same tools appear directly as chrome_*.
 
 Workflow: chrome_status -> chrome_navigate (or chrome_tabs action="new") -> chrome_snapshot for refs like f0_e12 -> chrome_click/type/select/press/hover -> chrome_wait_for -> chrome_snapshot. Prefer snapshots over screenshots; use chrome_dom for HTML/styles/rects and chrome_evaluate for structured extraction.
 

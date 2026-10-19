@@ -114,6 +114,8 @@ A skill complementa as instruções do servidor MCP; ela não substitui a extens
 
 ## Ferramentas disponíveis
 
+Em Code Mode, cada ferramenta é chamada como `tools.chrome.<nome>` dentro de `execute`; a tabela usa os nomes MCP `chrome_*`.
+
 | Ferramenta | Para que serve |
 | --- | --- |
 | `chrome_status` | Estado da conexão, abas abertas e aba ativa. |
@@ -150,6 +152,23 @@ Os padrões priorizam velocidade e economia de contexto:
 - `waitUntil` padrão é `domcontentloaded`; peça `load` ou `networkidle` quando o conteúdo depender de recursos tardios, ou `none` para não esperar.
 - Prefira `chrome_snapshot` a `chrome_screenshot`: snapshots gastam muito menos contexto.
 - Use `chrome_wait_for` (seletor, texto, URL, `js` ou `loadState`) em vez de pausas fixas.
+
+## Code Mode
+
+Este projeto usa **Code Mode** (`"codemode": true` no `opencode.jsonc`). As ferramentas não entram na lista nativa uma a uma; elas ficam disponíveis dentro da ferramenta `execute`:
+
+```js
+const status = await tools.chrome.status({});
+const snap = await tools.chrome.snapshot({ tabId: 123 });
+return { status, snap };
+```
+
+Vantagens:
+
+- O catálogo chega compacto ao modelo, em vez dos esquemas JSON completos das 24 ferramentas em toda requisição.
+- Várias chamadas independentes podem ser agrupadas em um único `execute` com `Promise.all`.
+
+Custo: o fluxo passa a usar `execute` e `tools.chrome.*`; a skill `browser-control` já documenta isso. Para voltar às ferramentas diretas `chrome_*`, use `"codemode": false` e rode `opencode reload`.
 
 ## Configurações da extensão
 

@@ -1,5 +1,7 @@
 # Referência das ferramentas `chrome_*`
 
+> **Code Mode:** neste projeto o servidor usa `codemode: true`. Chame cada ferramenta dentro de `execute` como `tools.chrome.<nome>({...})`. Os nomes `chrome_*` abaixo são os nomes MCP; `chrome_click` corresponde a `tools.chrome.click`.
+
 Todas as ferramentas aceitam `tabId` quando fazem sentido. Em sessões com mais de uma janela ou aba, passe o `tabId` explicitamente. `timeout` é em milissegundos.
 
 ## Sessão, abas e navegação
