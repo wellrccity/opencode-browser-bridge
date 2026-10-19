@@ -34,7 +34,7 @@ O servidor MCP já é iniciado pelo OpenCode e injeta suas instruções na sess�
 Os padrões privilegiam velocidade. Ajuste apenas quando o site exigir:
 
 - `chrome_click`: `human=false` por padrão (sem trajetória humanizada do mouse). Use `human=true` somente quando o site reagir a movimento brusco.
-- `chrome_click`: observa navegação por ~450 ms (`detectNavigationMs`). Aumente se um clique demorar a navegar.
+- `chrome_click`: observa navegação por ~700 ms (`detectNavigationMs`). Aumente se um clique demorar a navegar.
 - Navegação e espera pós-ação usam `waitUntil="domcontentloaded"`. Peça `load` ou `networkidle` quando o conteúdo depender de recursos tardios, ou `none` para não esperar.
 - Prefira `chrome_snapshot` a `chrome_screenshot`; snapshots gastam muito menos contexto.
 - Evite `sleep` chutado: use `chrome_wait_for` com seletor, texto, URL, `js` ou `loadState`.

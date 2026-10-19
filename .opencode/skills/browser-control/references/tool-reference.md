@@ -123,7 +123,7 @@ Alvo: `ref` (preferido), `selector`, `text` (texto visível/nome acessível) ou 
 | `human` | Movimento de mouse humanizado; padrão `false` (mais rápido). Use `true` só quando o site exigir |
 | `waitUntil` | Estado de carga após navegação; padrão `domcontentloaded` |
 | `timeout` | 1000–120000; padrão 30000 |
-| `detectNavigationMs` | 100–5000; padrão 450 |
+| `detectNavigationMs` | 100–5000; padrão 700 |
 | `switchToNewTab` | Ativar aba aberta pelo clique |
 | `delayAfter` | 0–5000 ms |
 
