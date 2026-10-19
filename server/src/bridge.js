@@ -202,7 +202,7 @@ export class BrowserBridge extends EventEmitter {
       this.sendTo(socket, {
         type: 'welcome',
         server: 'opencode-browser-bridge',
-        version: '0.1.2',
+        version: '0.1.3',
         heartbeatSeconds: 20
       });
       this.emit('ready', this.hello);

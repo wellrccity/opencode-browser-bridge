@@ -45,18 +45,18 @@ async function ensureInitialized() {
     // Alarms are best-effort.
   }
   updateBadge();
-  if (settings.autoConnect) connect();
+  if (settings.autoConnect) connectQuietly();
 }
 
 chrome.runtime.onInstalled.addListener(() => {
   initPromise.then(() => {
-    if (settings.autoConnect) connect();
+    if (settings.autoConnect) connectQuietly();
   });
 });
 
 chrome.runtime.onStartup.addListener(() => {
   initPromise.then(() => {
-    if (settings.autoConnect) connect();
+    if (settings.autoConnect) connectQuietly();
   });
 });
 
@@ -65,7 +65,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
   if (wsState === 'connected') {
     send({ type: 'ping', ts: Date.now() });
   } else if (settings.autoConnect && !manualDisconnect) {
-    connect();
+    connectQuietly();
   }
 });
 
@@ -77,7 +77,7 @@ chrome.storage.onChanged.addListener((changes, area) => {
     previous.token !== settings.token;
   if (serverChanged) {
     closeSocket();
-    if (settings.autoConnect) connect();
+    if (settings.autoConnect) connectQuietly();
   }
   if (settings.keepAttached) {
     clearTimeout(detachTimer);
@@ -123,7 +123,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         if (message.reconnect) {
           manualDisconnect = false;
           closeSocket();
-          connect();
+          connectQuietly();
         }
         return getStatus();
       })
@@ -234,6 +234,12 @@ function connect() {
         if (settings.autoConnect && !manualDisconnect) scheduleReconnect();
       }
     });
+  });
+}
+
+function connectQuietly() {
+  connect().catch(() => {
+    // lastError and wsState are already set; scheduleReconnect() retries.
   });
 }
 

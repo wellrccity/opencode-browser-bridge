@@ -1,6 +1,6 @@
 {
   "name": "opencode-browser-bridge",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "private": true,
   "type": "module",
   "description": "Chrome extension + MCP server that lets OpenCode control a real browser like a human.",
