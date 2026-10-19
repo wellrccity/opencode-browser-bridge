@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OpenCode Browser Bridge</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="hero">
+    <div class="brand">
+      <img class="logo" src="icons/icon48.png" alt="" width="40" height="40">
+      <div>
+        <h1>Browser Bridge</h1>
+        <p class="subtitle">Controle humano do Chrome para o OpenCode</p>
+      </div>
+    </div>
+    <span id="statusPill" class="pill pill-off" role="status" aria-live="polite">Desconectado</span>
+  </header>
+
+  <main>
+    <section class="card" aria-labelledby="connection-title">
+      <div class="section-heading">
+        <h2 id="connection-title">Conexão</h2>
+        <button id="refreshBtn" class="icon-button" type="button" title="Atualizar status" aria-label="Atualizar status">↻</button>
+      </div>
+
+      <dl class="status-grid">
+        <div>
+          <dt>Servidor</dt>
+          <dd id="currentServer">—</dd>
+        </div>
+        <div>
+          <dt>Extensão</dt>
+          <dd id="extensionVersion">—</dd>
+        </div>
+        <div>
+          <dt>Aba ativa</dt>
+          <dd id="activeTab">—</dd>
+        </div>
+        <div>
+          <dt>Último contato</dt>
+          <dd id="lastSeen">—</dd>
+        </div>
+      </dl>
+
+      <form id="connectionForm" autocomplete="off">
+        <label class="field">
+          <span>URL do servidor MCP</span>
+          <input id="serverUrl" name="serverUrl" type="text" inputmode="url" spellcheck="false" placeholder="ws://127.0.0.1:8787">
+        </label>
+        <label class="field">
+          <span>Token <em>(opcional)</em></span>
+          <input id="token" name="token" type="password" spellcheck="false" placeholder="Deixe vazio se não usar token">
+        </label>
+
+        <div class="button-row">
+          <button id="connectBtn" class="button primary" type="button">Conectar</button>
+          <button id="disconnectBtn" class="button" type="button">Desconectar</button>
+          <button id="saveBtn" class="button accent" type="submit">Salvar</button>
+        </div>
+      </form>
+      <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="card" aria-labelledby="behavior-title">
+      <h2 id="behavior-title">Comportamento</h2>
+
+      <label class="toggle">
+        <input id="autoConnect" type="checkbox">
+        <span>
+          <strong>Conectar automaticamente</strong>
+          <small>Reconecta quando o Chrome ou o serviço MCP inicia.</small>
+        </span>
+      </label>
+
+      <label class="toggle">
+        <input id="preferCdp" type="checkbox">
+        <span>
+          <strong>Usar CDP por padrão</strong>
+          <small>Entrada confiável, screenshots e avaliação. Mostra a faixa de depuração.</small>
+        </span>
+      </label>
+
+      <label class="toggle">
+        <input id="keepAttached" type="checkbox">
+        <span>
+          <strong>Manter depurador anexado</strong>
+          <small>Desative para desanexar alguns segundos após cada comando.</small>
+        </span>
+      </label>
+
+      <label class="toggle">
+        <input id="interceptDialogs" type="checkbox">
+        <span>
+          <strong>Interceptar diálogos</strong>
+          <small>Responde alert/confirm/prompt para a automação não travar.</small>
+        </span>
+      </label>
+
+      <label class="toggle sub-toggle">
+        <input id="confirmDialogs" type="checkbox">
+        <span>
+          <strong>Aceitar <code>confirm()</code></strong>
+          <small>Quando desligado, responde “Cancelar”.</small>
+        </span>
+      </label>
+
+      <label class="field compact">
+        <span>Resposta de <code>prompt()</code></span>
+        <input id="promptDialogText" type="text" spellcheck="false" placeholder="Texto devolvido pelo prompt">
+      </label>
+
+      <label class="toggle">
+        <input id="autoSwitchNewTabs" type="checkbox">
+        <span>
+          <strong>Mudar para novas abas</strong>
+          <small>Ativa automaticamente uma aba aberta por um clique.</small>
+        </span>
+      </label>
+    </section>
+
+    <section class="card" aria-labelledby="diagnostics-title">
+      <h2 id="diagnostics-title">Diagnóstico</h2>
+      <div class="diagnostics">
+        <div class="diag-row">
+          <span>Abas abertas</span>
+          <strong id="tabCount">0</strong>
+        </div>
+        <div class="diag-row">
+          <span>Depurador anexado</span>
+          <strong id="debuggerTabs">Nenhuma</strong>
+        </div>
+        <div class="diag-row">
+          <span>Token configurado</span>
+          <strong id="hasToken">Não</strong>
+        </div>
+      </div>
+      <p id="lastError" class="error" hidden></p>
+      <button id="detachBtn" class="button full" type="button">Desanexar depurador de todas as abas</button>
+    </section>
+  </main>
+
+  <footer>
+    <span>Local e privado · <code>127.0.0.1</code></span>
+    <button id="extensionsBtn" class="link-button" type="button">chrome://extensions</button>
+  </footer>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

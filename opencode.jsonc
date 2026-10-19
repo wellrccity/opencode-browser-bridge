@@ -1,0 +1,24 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "servers": {
+      // Do not rename this server to "browser": OpenCode V2 has a built-in
+      // browser namespace, and MCP tools with the same names are shadowed.
+      "chrome": {
+        "type": "local",
+        "command": ["node", "server/src/index.js"],
+        "cwd": ".",
+        // Exposes chrome_* tools directly instead of grouping them in Code Mode.
+        "codemode": false,
+        // Keep this port in sync with the extension popup.
+        "environment": {
+          "OPENCODE_BROWSER_PORT": "8787"
+        },
+        "timeout": {
+          "startup": 30000,
+          "catalog": 30000
+        }
+      }
+    }
+  }
+}

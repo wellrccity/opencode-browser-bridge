@@ -1,0 +1,21 @@
+{
+  "name": "opencode-browser-bridge",
+  "version": "0.1.2",
+  "private": true,
+  "type": "module",
+  "description": "Chrome extension + MCP server that lets OpenCode control a real browser like a human.",
+  "scripts": {
+    "start": "node server/src/index.js",
+    "test": "node --test test/bridge.test.js test/mcp.test.js",
+    "icons": "node scripts/make-icons.mjs",
+    "check": "node scripts/check.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "ws": "^8.22.0",
+    "zod": "^4.6.7"
+  }
+}
