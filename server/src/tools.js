@@ -190,7 +190,7 @@ export function registerTools(server, bridge) {
       human: z.boolean().optional().describe('Move the mouse along a human-like path. Default false (faster); set true only when a site needs human-like movement.'),
       waitUntil: waitUntil.default('domcontentloaded'),
       timeout: z.number().int().min(1000).max(120000).default(30000),
-      detectNavigationMs: z.number().int().min(100).max(5000).optional().describe('How long to watch for a navigation after the click. Default 450.'),
+      detectNavigationMs: z.number().int().min(100).max(5000).optional().describe('How long to watch for a navigation after the click. Default 700.'),
       switchToNewTab: z.boolean().optional(),
       delayAfter: z.number().int().min(0).max(5000).optional()
     }

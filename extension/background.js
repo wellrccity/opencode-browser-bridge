@@ -394,13 +394,13 @@ async function broadcastStatus() {
 
 function updateBadge() {
   try {
-    chrome.action.setBadgeText({ text: wsState === 'connected' ? 'ON' : '' });
-    chrome.action.setBadgeBackgroundColor({ color: wsState === 'connected' ? '#16a34a' : '#6b7280' });
+    chrome.action.setBadgeText({ text: wsState === 'connected' ? 'ON' : '' })?.catch?.(() => {});
+    chrome.action.setBadgeBackgroundColor({ color: wsState === 'connected' ? '#16a34a' : '#6b7280' })?.catch?.(() => {});
     chrome.action.setTitle({
       title: wsState === 'connected'
         ? 'OpenCode Browser Bridge: connected'
         : 'OpenCode Browser Bridge: disconnected'
-    });
+    })?.catch?.(() => {});
   } catch {
     // Ignore.
   }
@@ -702,7 +702,7 @@ async function waitForReady(tabId, waitUntil = 'domcontentloaded', timeout = 300
 }
 
 async function waitForPossibleNavigation(tabId, beforeUrl, params = {}) {
-  const detectMs = Math.max(100, Math.min(Number(params.detectNavigationMs) || 450, 5000));
+  const detectMs = Math.max(100, Math.min(Number(params.detectNavigationMs) || 700, 5000));
   const beforeTabs = new Set((await chrome.tabs.query({})).map((tab) => tab.id));
   const started = Date.now();
   let navigated = false;

@@ -148,7 +148,7 @@ Em Code Mode, cada ferramenta é chamada como `tools.chrome.<nome>` dentro de `e
 Os padrões priorizam velocidade e economia de contexto:
 
 - `chrome_click` usa `human=false` por padrão (sem trajetória humanizada do mouse). Passe `human=true` quando o site precisar.
-- Depois de um clique, o bridge observa a navegação por ~450 ms (`detectNavigationMs`). Aumente se o clique demorar a navegar.
+- Depois de um clique, o bridge observa a navegação por ~700 ms (`detectNavigationMs`). Aumente se o clique demorar a navegar.
 - `waitUntil` padrão é `domcontentloaded`; peça `load` ou `networkidle` quando o conteúdo depender de recursos tardios, ou `none` para não esperar.
 - Prefira `chrome_snapshot` a `chrome_screenshot`: snapshots gastam muito menos contexto.
 - Use `chrome_wait_for` (seletor, texto, URL, `js` ou `loadState`) em vez de pausas fixas.
