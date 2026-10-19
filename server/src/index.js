@@ -12,7 +12,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { BrowserBridge } from './bridge.js';
 import { registerTools } from './tools.js';
 
-const VERSION = '0.1.2';
+const VERSION = '0.1.3';
 
 const INSTRUCTIONS = `Controls a real Google Chrome browser through the "OpenCode Browser Bridge" extension.
 
