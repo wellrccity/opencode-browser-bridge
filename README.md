@@ -41,9 +41,12 @@ Nenhum tráfego é enviado para a internet pelo servidor. Os resultados das ferr
 ## Instalação
 
 ```powershell
-cd C:\Users\Well\Desktop\browser-integration
+git clone https://github.com/wellrccity/opencode-browser-bridge.git
+cd opencode-browser-bridge
 npm install
 ```
+
+A skill do OpenCode já vem no projeto, em `.opencode/skills/browser-control/`. Depois de clonar, abra o OpenCode dentro dessa pasta: a skill aparece na lista automaticamente e pode ser carregada com `@browser-control`.
 
 O arquivo `opencode.jsonc` já aponta para `server/src/index.js` e inicia o servidor automaticamente:
 
