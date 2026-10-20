@@ -2,3 +2,9 @@ node_modules/
 *.log
 .DS_Store
 Thumbs.db
+
+# Pastas locais de dados/trabalho (não fazem parte do projeto)
+kaggle-s6e10/
+titanic/
+__pycache__/
+*.ipynb_checkpoints/
